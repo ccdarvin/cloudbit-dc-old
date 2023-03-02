@@ -1,22 +1,43 @@
 import { useContext } from "react";
-import { useGetIdentity } from "@pankod/refine-core";
+import { useGetIdentity, useNavigation, useLogout } from "@pankod/refine-core";
 import {
-  AntdLayout,
   Space,
   Avatar,
   Typography,
   Switch,
+  Dropdown
 } from "@pankod/refine-antd";
 import { ColorModeContext } from "contexts";
+import { UserOutlined, AppstoreOutlined, LogoutOutlined } from '@ant-design/icons'
+import type { MenuProps } from 'antd';
 
 const { Text } = Typography;
+
+const items: MenuProps['items'] = [
+  {
+    key: 'profile',
+    label: 'Profile',
+    icon: <UserOutlined />,
+  },
+  {
+    key: 'apps',
+    label: 'Apps',
+    icon: <AppstoreOutlined />,
+  },
+  {
+    key: 'logout',
+    label: 'Logout',
+    icon: <LogoutOutlined />,
+  },
+]
 
 export const Header: React.FC = () => {
   const { data: user } = useGetIdentity();
   const { mode, setMode } = useContext(ColorModeContext);
-
+  const navigation = useNavigation();
+  const { mutate: logout } = useLogout<{ redirectPath: string }>();
   return (
-    <AntdLayout.Header
+    <div
       style={{
         display: "flex",
         justifyContent: "flex-end",
@@ -31,14 +52,29 @@ export const Header: React.FC = () => {
         onChange={() => setMode(mode === "light" ? "dark" : "light")}
         defaultChecked={mode === "dark"}
       />
-      <Space style={{ marginLeft: "8px" }}>
-        {user?.name && (
-          <Text ellipsis strong>
-            {user.name}
-          </Text>
-        )}
-        {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-      </Space>
-    </AntdLayout.Header>
+      <Dropdown 
+        menu={{ 
+          items,
+          onClick: ({ key }) => {
+            if (key === 'logout') {
+              logout();
+            }
+            navigation.push('/' + key);
+          }
+        }} 
+      >
+        <Space style={{ marginLeft: "8px", cursor: "pointer" }}>
+          {user?.id && (
+            <Text ellipsis strong>
+              {user.name || user.email }
+            </Text>
+          )}
+          {user?.avatar? 
+            <Avatar src={user?.avatar} alt={user?.name} />:
+            <Avatar icon={<UserOutlined />}/>
+          }
+        </Space>
+      </Dropdown>
+    </div>
   );
 };

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import {
   AntdLayout,
-  ConfigProvider,
   Menu,
   Grid,
   Icons,
@@ -20,10 +19,10 @@ import {
   useMenu,
   useRefineContext,
 } from "@pankod/refine-core";
-
 import { Title as DefaultTitle } from "../title";
-
+import {ColorModeContext} from "contexts"
 import { drawerButtonStyles } from "./styles";
+
 const {
   UnorderedListOutlined,
   LogoutOutlined,
@@ -46,6 +45,8 @@ export const Sider: typeof DefaultSider = ({ render }) => {
 
   const isMobile =
     typeof breakpoint.lg === "undefined" ? false : !breakpoint.lg;
+
+  const { mode } = useContext(ColorModeContext);
 
   const RenderToTitle = Title ?? DefaultTitle;
 
@@ -152,6 +153,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
         selectedKeys={[selectedKey]}
         defaultOpenKeys={defaultOpenKeys}
         mode="inline"
+        theme={mode === "dark" ? "dark" : "light"}
         onClick={() => {
           setDrawerOpen(false);
           if (!breakpoint.lg) {
@@ -179,7 +181,9 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           maskClosable={true}
         >
           <AntdLayout>
-            <AntdLayout.Sider style={{ height: "100vh", overflow: "hidden" }}>
+            <AntdLayout.Sider
+              theme={mode === "dark" ? "dark" : "light"}
+              style={{ height: "100vh", overflow: "hidden" }}>
               <RenderToTitle collapsed={false} />
               {renderMenu()}
             </AntdLayout.Sider>
@@ -203,6 +207,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     return (
       <AntdLayout.Sider
         collapsible
+        theme={mode === "dark" ? "dark" : "light"}
         collapsed={collapsed}
         onCollapse={(collapsed: boolean): void => setCollapsed(collapsed)}
         collapsedWidth={80}
@@ -214,21 +219,5 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     );
   };
 
-  return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Menu: {
-            colorItemBg: "transparent",
-            colorItemText: "#fff",
-            colorItemTextSelected: "#fff",
-            colorItemBgSelected: "transparent",
-            colorItemTextHover: "#fff",
-          },
-        },
-      }}
-    >
-      {renderContent()}
-    </ConfigProvider>
-  );
+  return renderContent()
 };

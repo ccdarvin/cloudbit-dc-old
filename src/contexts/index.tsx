@@ -5,6 +5,7 @@ import React, {
   useState,
 } from "react";
 import { ConfigProvider, theme } from "@pankod/refine-antd";
+import esES from "antd/es/locale/es_ES";
 
 type ColorModeContextType = {
   mode: string;
@@ -50,8 +51,12 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
       }}
     >
       <ConfigProvider
+        locale={esES}
         theme={{
           algorithm: mode === "light" ? defaultAlgorithm : darkAlgorithm,
+          token: {
+            colorPrimary: "#0958d9",
+          }
         }}
       >
         {children}
