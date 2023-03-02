@@ -25,13 +25,12 @@ import { authProvider, axiosInstance } from "./authProvider";
 import { API_URL } from "./constants";
 import { AppsList, AppsCreate, AppsEdit, AppsShow } from "pages/apps";
 import { PatientsList, PatientsCreate, PatientsEdit, PatientsShow } from "pages/patients";
-
 import { TreatmentsList, TreatmentsCreate, TreatmentsEdit, TreatmentsShow } from "pages/treatments";
-
 import { DoctorsList, DoctorsCreate, DoctorsEdit, DoctorsShow } from "pages/doctors";
 import { SettingOutlined } from '@ant-design/icons'
-
 import { ProceduresList, ProceduresEdit, ProceduresShow } from "pages/procedures";
+
+
 
 function App() {
   
