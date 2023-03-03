@@ -28,7 +28,7 @@ import { PatientsList, PatientsCreate, PatientsEdit, PatientsShow } from "pages/
 import { TreatmentsList, TreatmentsCreate, TreatmentsEdit, TreatmentsShow } from "pages/treatments";
 import { DoctorsList, DoctorsCreate, DoctorsEdit, DoctorsShow } from "pages/doctors";
 import { SettingOutlined } from '@ant-design/icons'
-import { ProceduresList, ProceduresEdit, ProceduresShow } from "pages/procedures";
+import { ProceduresList } from "pages/procedures";
 
 
 
@@ -98,8 +98,6 @@ function App() {
               route: "procedimientos",
             },
             list: ProceduresList,
-            edit: ProceduresEdit,
-            show: ProceduresShow
           }]}
           Title={Title}
           Header={Header}

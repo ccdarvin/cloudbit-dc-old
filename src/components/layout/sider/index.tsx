@@ -184,7 +184,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             <AntdLayout.Sider
               theme={mode === "dark" ? "dark" : "light"}
               style={{ height: "100vh", overflow: "hidden" }}>
-              <RenderToTitle collapsed={false} />
+              <RenderToTitle collapsed={true} />
               {renderMenu()}
             </AntdLayout.Sider>
           </AntdLayout>

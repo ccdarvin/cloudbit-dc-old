@@ -14,7 +14,10 @@ export const PatientsEdit: React.FC<IResourceComponentsProps> = () => {
     
     return <div>
         <PatientsList  />
-        <EditDrawer saveButtonProps={saveButtonProps} drawerProps={{...drawerProps}}>
+        <EditDrawer 
+            saveButtonProps={saveButtonProps} drawerProps={{...drawerProps}}
+            isLoading={queryResult?.isLoading}
+        >
             <PatientsForm formProps={formProps} />
         </EditDrawer>
     </div>

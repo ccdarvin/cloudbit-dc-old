@@ -13,7 +13,9 @@ import dayjs from "dayjs";
 
 
 export const DoctorsList: React.FC<IResourceComponentsProps<GetListResponse<{}>>> = () => {
-    const { tableProps, tableQueryResult } = useTable({})
+    const { tableProps, tableQueryResult } = useTable()
+
+    tableProps.loading = tableQueryResult?.isLoading || tableQueryResult?.isRefetching
     
     return <div>
         <List 
@@ -21,9 +23,11 @@ export const DoctorsList: React.FC<IResourceComponentsProps<GetListResponse<{}>>
             headerButtons={tableQueryResult?.data?.total? <CreateButton type="primary" />: <></>}
         >
             <Table 
-                {...tableProps} rowKey="id"
+                {...tableProps} 
+                rowKey="id"
                 locale={{
-                    emptyText: <Empty description="No hay pacientes">
+                    emptyText: tableQueryResult?.isLoading? <></>: 
+                    <Empty description="No hay pacientes">
                         <CreateButton type="primary" />
                     </Empty>
                 }}

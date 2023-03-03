@@ -25,7 +25,8 @@ export const TreatmentsList: React.FC<IResourceComponentsProps<GetListResponse<{
             <Table 
                 {...tableProps}
                 locale={{
-                    emptyText: <Empty description="No hay tratamientos">
+                    emptyText: tableQueryResult?.isLoading? <div style={{minHeight: '50%'}}></div> :
+                    <Empty description="No hay pacientes" style={{minHeight: '50%'}}>
                         <CreateButton type="primary" />
                     </Empty>
                 }}
